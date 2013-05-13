@@ -2,8 +2,8 @@
 
 abstract class Kohana_Analytics
 {
-	// Kohana_Analytics instance
-	protected static $_instance;
+    // Kohana_Analytics instance
+    protected static $_instance;
     protected $_config;
     protected $_gapi;
 
@@ -23,24 +23,24 @@ abstract class Kohana_Analytics
         $this->_gapi = new gapi($this->_config['username'], $this->_config['password']);
     }
 
-	/**
-	 * Singleton pattern
-	 *
-	 * @return $this
-	 */
-	public static function instance()
-	{
-		if ( ! isset(Analytics::$_instance))
-		{
-			// Load the configuration for this type
-			$config = Kohana::$config->load('analytics');
+    /**
+     * Singleton pattern
+     *
+     * @return $this
+     */
+    public static function instance()
+    {
+        if ( ! isset(Analytics::$_instance))
+        {
+            // Load the configuration for this type
+            $config = Kohana::$config->load('analytics');
 
-			// Create a new session instance
+            // Create a new session instance
             Analytics::$_instance = new Analytics($config);
-		}
-	
-		return Analytics::$_instance;
-	}
+        }
+
+        return Analytics::$_instance;
+    }
 
     public function getCountPageViews($pageUri)
     {
@@ -58,11 +58,10 @@ abstract class Kohana_Analytics
             array('pageviews'),
             NULL,
             $filter
-        );  
+        );
         $pageViews = 0;
-        foreach($this->_gapi->getResults() as $result)
-        {
-            $pageViews +=$result->getPageviews();
+        foreach ($this->_gapi->getResults() as $result) {
+            $pageViews += $result->getPageviews();
         }
         return $pageViews;
     }
