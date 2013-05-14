@@ -42,7 +42,20 @@ abstract class Kohana_Analytics
         return Analytics::$_instance;
     }
 
-    public function getCountPageViews($pageUri)
+    /**
+     * Return count views per page
+     *
+     * @param string $pageUri
+     *   Page uri without http://.
+     *   e.g.: ~^/information_.[a-z0-9]?/about.php$    #Regular Expression
+     *   e.g.: /information_abc/about.php     #Equals
+     * @param string $startDate
+     *   Date format is 'Y-m-d'. e.g.: 2013-04-01.
+     *
+     * @return int
+     *   A count of page views.
+     */
+    public function getCountPageViews($pageUri, $startDate = NULL)
     {
         if (strpos($pageUri, '~') === 0){
             // Regular Expression
@@ -52,12 +65,15 @@ abstract class Kohana_Analytics
             // Equals
             $filter = 'pagePath == ' . $pageUri;
         }
+        if (!$startDate)
+            $startDate = date('Y-m-d', strtotime('1 month ago'));
         $this->_gapi->requestReportData(
             $this->_config['report_id'],
             array('visitorType'),
-            array('pageviews'),
+            array('pageViews'),
             NULL,
-            $filter
+            $filter,
+            $startDate
         );
         $pageViews = 0;
         foreach ($this->_gapi->getResults() as $result) {
