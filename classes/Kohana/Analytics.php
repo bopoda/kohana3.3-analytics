@@ -4,6 +4,7 @@ abstract class Kohana_Analytics
 {
     // Kohana_Analytics instance
     protected static $_instance;
+
     protected $_config;
     protected $_gapi;
 
@@ -24,7 +25,7 @@ abstract class Kohana_Analytics
     }
 
     /**
-     * Singleton pattern
+     * Singleton pattern.
      *
      * @return $this
      */
@@ -43,7 +44,7 @@ abstract class Kohana_Analytics
     }
 
     /**
-     * Return count views per page
+     * Return count views per page.
      *
      * @param string $pageUri
      *   Page uri without http://.
@@ -57,11 +58,11 @@ abstract class Kohana_Analytics
      */
     public function getCountPageViews($pageUri, $startDate = NULL)
     {
-        if (strpos($pageUri, '~') === 0){
+        if (strpos($pageUri, '~') === 0) {
             // Regular Expression
             $filter = 'pagePath = ' . $pageUri;
         }
-        else{
+        else {
             // Equals
             $filter = 'pagePath == ' . $pageUri;
         }
