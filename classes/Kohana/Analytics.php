@@ -60,11 +60,11 @@ abstract class Kohana_Analytics
     {
         if (strpos($pageUri, '~') === 0) {
             // Regular Expression
-            $filter = 'pagePath = ' . $pageUri;
+            $filter = 'pagePath=' . $pageUri;
         }
         else {
             // Equals
-            $filter = 'pagePath == ' . $pageUri;
+            $filter = 'pagePath==' . $pageUri;
         }
         if (!$startDate)
             $startDate = date('Y-m-d', strtotime('1 month ago'));
