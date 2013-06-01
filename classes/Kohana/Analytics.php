@@ -5,7 +5,10 @@ abstract class Kohana_Analytics
     // Kohana_Analytics instance
     protected static $_instance;
 
+    // analytics config
     protected $_config;
+
+    // GAPI instance
     protected $_gapi;
 
     /**
@@ -31,12 +34,8 @@ abstract class Kohana_Analytics
      */
     public static function instance()
     {
-        if ( ! isset(Analytics::$_instance))
-        {
-            // Load the configuration for this type
+        if (!isset(Analytics::$_instance)) {
             $config = Kohana::$config->load('analytics');
-
-            // Create a new session instance
             Analytics::$_instance = new Analytics($config);
         }
 
@@ -53,8 +52,9 @@ abstract class Kohana_Analytics
      * @param string $startDate
      *   Date format is 'Y-m-d'. e.g.: 2013-04-01.
      *
-     * @return int
-     *   A count of page views.
+     * @return array
+     *  `pageviews` as key
+     *  `uniquePageviews` as key
      */
     public function getCountPageViews($pageUri, $startDate = NULL)
     {
@@ -66,21 +66,27 @@ abstract class Kohana_Analytics
             // Equals
             $filter = 'pagePath==' . $pageUri;
         }
-        if (!$startDate)
+        if (!$startDate) {
             $startDate = date('Y-m-d', strtotime('1 month ago'));
+        }
         $this->_gapi->requestReportData(
             $this->_config['report_id'],
             array('visitorType'),
-            array('pageViews'),
+            array('pageViews', 'uniquePageviews'),
             NULL,
             $filter,
             $startDate
         );
-        $pageViews = 0;
+        $pageviews = 0;
+        $uniquePageviews = 0;
         foreach ($this->_gapi->getResults() as $result) {
-            $pageViews += $result->getPageviews();
+            $pageviews += $result->getPageviews();
+            $uniquePageviews += $result->getUniquePageviews();
         }
-        return $pageViews;
+        return array(
+            'pageviews' => $pageviews,
+            'uniquePageviews' => $uniquePageviews,
+        );
     }
 
 }
