@@ -7,7 +7,7 @@ kohana3.3-analytics
 
 Интеграция приложения на KohanaPHP (v3.3.x) и Google's Analytics API.
 
-О модуле [analytics для kohana 3.3](http://jeka.by/post/1013/modul-analytics-kohana-3.3-dlya-raboti-s-google-analytics-api/)
+О модуле [analytics для kohana 3.3](http://jeka.by/post/1013/google-analytics-api-kohana-3.3/)
 
 @use [GAPI](http://code.google.com/p/gapi-google-analytics-php-interface/)
 
