@@ -19,3 +19,6 @@ kohana3.3-analytics
 # Using
 
 1. Get count page views by page uri: `Analytics::instance()->getCountPageViews($pageUri)`
+
+[Module not working](http://jeka.by/post/1013/google-analytics-api-kohana-3.3/#upd-not-working) since 2015, September when google changed access to his analytics API.
+
